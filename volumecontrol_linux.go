@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func ChangeVolume(volume int) (err error) {
+func SetVolume(volume int) (err error) {
 	if volume < 0 || volume > 100 {
 		err = errors.New(fmt.Sprintf("invalid volume %n", volume))
 		return
