@@ -13,7 +13,7 @@ func ChangeVolume(volume int) (err error) {
 		return
 	}
 
-	volumeFloat := float64(volume) / 10
+	volumeFloat := float64(volume) / 100 * 7
 
 	cmd := exec.Command("osascript", "-e", "set Volume " + strconv.FormatFloat(volumeFloat, 'f', 1, 64))
 	err = cmd.Run()
