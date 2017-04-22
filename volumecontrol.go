@@ -12,10 +12,17 @@ const (
 	VK_VOLUME_UP           = 0xAF
 )
 
-var volumeState int = -1
+const (
+	WINDOWS_VOLUME_STEPSIZE = 2
+)
+
+// WindowsKeepVolumeState - Set to false if other programs or users can affect the volume
+var WindowsKeepVolumeState = true
 
 var dll = syscall.NewLazyDLL("user32.dll")
 var procKeyBd = dll.NewProc("keybd_event")
+
+var volumeState int = -1
 
 func SetVolume(volume int) (err error) {
 	if volume < 0 || volume > 100 {
@@ -23,26 +30,29 @@ func SetVolume(volume int) (err error) {
 		return
 	}
 
-	if volumeState < 0 {
-		for i := 0; i < 50; i++ {
+	if volumeState < 0 || !WindowsKeepVolumeState {
+		// Reset volume to zero, so we know what the current state is.
+		maxSteps := 100 / WINDOWS_VOLUME_STEPSIZE
+		for i := 0; i < maxSteps; i++ {
 			volumeDown()
-			time.Sleep(1 * time.Microsecond)
+			time.Sleep(1 * time.Millisecond)
 		}
 		volumeState = 0
 	}
 
+	volume = volume/2*2 // Round to even numbers
 	if volumeState < volume {
-		for i := volumeState; i < volume; i += 2 {
+		for i := volumeState; i < volume; i += WINDOWS_VOLUME_STEPSIZE {
 			volumeUp()
-			time.Sleep(1 * time.Microsecond)
+			time.Sleep(1 * time.Millisecond)
 		}
 	} else if volumeState > volume {
-		for i := volumeState; i > volume; i -= 2 {
+		for i := volumeState; i > volume; i -= WINDOWS_VOLUME_STEPSIZE {
 			volumeDown()
-			time.Sleep(1 * time.Microsecond)
+			time.Sleep(1 * time.Millisecond)
 		}
 	}
-	volumeState = volume/2*2 // Round to even numbers
+	volumeState = volume
 	return
 }
 
