@@ -16,7 +16,12 @@ func TestSetVolume(t *testing.T) {
 
 	time.Sleep(2 * time.Second)
 
-	err = SetVolume(33)
+	err = SetVolume(22)
+	t.Logf("%v", err)
+
+	time.Sleep(2 * time.Second)
+
+	err = SetVolume(12)
 	t.Logf("%v", err)
 
 	time.Sleep(2 * time.Second)

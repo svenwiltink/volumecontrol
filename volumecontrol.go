@@ -12,6 +12,8 @@ const (
 	VK_VOLUME_UP           = 0xAF
 )
 
+var volumeState int = -1
+
 var dll = syscall.NewLazyDLL("user32.dll")
 var procKeyBd = dll.NewProc("keybd_event")
 
@@ -21,17 +23,26 @@ func SetVolume(volume int) (err error) {
 		return
 	}
 
-	for i := 0; i < 50; i++ {
-		volumeDown()
-		time.Sleep(1 * time.Microsecond)
-	}
-	volume = volume/2
-
-	for i := 0; i < volume; i++ {
-		volumeUp()
-		time.Sleep(1 * time.Microsecond)
+	if volumeState < 0 {
+		for i := 0; i < 50; i++ {
+			volumeDown()
+			time.Sleep(1 * time.Microsecond)
+		}
+		volumeState = 0
 	}
 
+	if volumeState < volume {
+		for i := volumeState; i < volume; i += 2 {
+			volumeUp()
+			time.Sleep(1 * time.Microsecond)
+		}
+	} else if volumeState > volume {
+		for i := volumeState; i > volume; i -= 2 {
+			volumeDown()
+			time.Sleep(1 * time.Microsecond)
+		}
+	}
+	volumeState = volume/2*2 // Round to even numbers
 	return
 }
 
