@@ -1,8 +1,8 @@
 package volumecontrol
 
 import (
-	"syscall"
 	"fmt"
+	"syscall"
 	"time"
 )
 
@@ -37,7 +37,7 @@ func SetVolume(volume int) (err error) {
 		volumeState = 0
 	}
 
-	volume = volume/2*2 // Round to even numbers
+	volume = volume / 2 * 2 // Round to even numbers
 	if volumeState < volume {
 		for i := volumeState; i < volume; i += WINDOWS_VOLUME_STEPSIZE {
 			volumeUp()

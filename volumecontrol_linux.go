@@ -13,7 +13,7 @@ func SetVolume(volume int) (err error) {
 		return
 	}
 
-	cmd := exec.Command("amixer", "-D", "pulse", "sset", "Master", strconv.Itoa(volume) + "%")
+	cmd := exec.Command("amixer", "-D", "pulse", "sset", "Master", strconv.Itoa(volume)+"%")
 	err = cmd.Run()
 	return
 }
