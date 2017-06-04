@@ -19,3 +19,13 @@ func SetVolume(volume int) (err error) {
 	err = cmd.Run()
 	return
 }
+
+func IncreaseVolume(volume int) (err error) {
+	err = errors.New("not implemented")
+	return
+}
+
+func DecreaseVolume(volume int) (err error) {
+	err = errors.New("not implemented")
+	return
+}

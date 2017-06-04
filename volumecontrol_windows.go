@@ -70,3 +70,15 @@ func volumeUp() (err error) {
 	_, _, err = procKeyBd.Call(uintptr(VK_VOLUME_UP), uintptr(vkey), 0, 0)
 	return
 }
+
+func IncreaseVolume(volume int) (err error) {
+	for i=0; i < volume; i+=WINDOWS_VOLUME_STEPSIZE{
+		volumeUp()
+	}
+}
+
+func DecreaseVolume(volume int) (err error) {
+	for i=0; i < volume; i+=WINDOWS_VOLUME_STEPSIZE{
+		volumeDown()
+	}
+}

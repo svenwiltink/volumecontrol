@@ -26,3 +26,13 @@ func TestSetVolume(t *testing.T) {
 
 	time.Sleep(2 * time.Second)
 }
+
+func TestIncreaseVolume(t *testing.T) {
+	err := IncreaseVolume(10)
+	t.Logf("%v", err)
+}
+
+func TestDecreaseVolume(t *testing.T) {
+	err := DecreaseVolume(10)
+	t.Logf("%v", err)
+}
