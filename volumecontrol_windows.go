@@ -1,8 +1,8 @@
 package volumecontrol
 
 import (
-	"syscall"
 	"fmt"
+	"syscall"
 	"time"
 )
 
@@ -37,7 +37,7 @@ func SetVolume(volume int) (err error) {
 		volumeState = 0
 	}
 
-	volume = volume/2*2 // Round to even numbers
+	volume = volume / 2 * 2 // Round to even numbers
 	if volumeState < volume {
 		for i := volumeState; i < volume; i += WINDOWS_VOLUME_STEPSIZE {
 			volumeUp()
@@ -69,4 +69,16 @@ func volumeUp() (err error) {
 	vkey := VK_VOLUME_UP + 0x80
 	_, _, err = procKeyBd.Call(uintptr(VK_VOLUME_UP), uintptr(vkey), 0, 0)
 	return
+}
+
+func IncreaseVolume(volume int) (err error) {
+	for i=0; i < volume; i+=WINDOWS_VOLUME_STEPSIZE{
+		volumeUp()
+	}
+}
+
+func DecreaseVolume(volume int) (err error) {
+	for i=0; i < volume; i+=WINDOWS_VOLUME_STEPSIZE{
+		volumeDown()
+	}
 }

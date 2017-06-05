@@ -9,7 +9,7 @@ func main() {
 	var volume int
 	flag.IntVar(&volume, "v", 0, "Volume")
 	flag.Parse()
-	err := volumecontrol.SetVolume(volume)
+	err := volumecontrol.DecreaseVolume(volume)
 	if err != nil {
 		panic(err)
 	}
