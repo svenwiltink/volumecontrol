@@ -72,13 +72,21 @@ func volumeUp() (err error) {
 }
 
 func IncreaseVolume(volume int) (err error) {
-	for i=0; i < volume; i+=WINDOWS_VOLUME_STEPSIZE{
-		volumeUp()
+	for i := 0; i < volume; i += WINDOWS_VOLUME_STEPSIZE {
+		err = volumeUp()
+		if err != nil {
+			return
+		}
 	}
+	return
 }
 
 func DecreaseVolume(volume int) (err error) {
-	for i=0; i < volume; i+=WINDOWS_VOLUME_STEPSIZE{
-		volumeDown()
+	for i := 0; i < volume; i += WINDOWS_VOLUME_STEPSIZE {
+		err = volumeDown()
+		if err != nil {
+			return
+		}
 	}
+	return
 }
