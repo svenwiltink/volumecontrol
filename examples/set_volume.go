@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/SvenWiltink/volumecontrol"
+	"github.com/svenwiltink/volumecontrol"
 )
 
 func main() {
